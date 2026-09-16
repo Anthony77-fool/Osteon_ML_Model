@@ -33,7 +33,7 @@ asked_question_ids = set()
 
 def determine_target_difficulty(mastery):
     """Map current mastery score to question difficulty tier."""
-    if mastery < 0.45:
+    if mastery < 0.50:
         return "Easy"
     elif mastery <= 0.75:
         return "Medium"
@@ -93,21 +93,43 @@ while True:
     onnx_inputs = {input_name: raw_features}
     output_name = session.get_outputs()[0].name
     prediction = session.run([output_name], onnx_inputs)[0]
-    predicted_mastery = float(prediction[0][0])
     
-    delta = predicted_mastery - current_mastery
+    # Extract predicted DELTA shift from the model
+    predicted_delta = float(prediction[0][0])
+    
+    # --- DYNAMIC RULE SAFETY NET ---
+    if is_correct == 0.0:
+        # If ML model fails to predict a negative delta, calculate a dynamic penalty
+        if predicted_delta >= 0.0:
+            # Drop more points if you fail an Easy question than a Hard question
+            diff_level = str(q['difficulty_level']).lower()
+            if diff_level == 'easy':
+                predicted_delta = -0.12  # Bigger penalty for missing easy questions
+            elif diff_level == 'medium':
+                predicted_delta = -0.08
+            else:
+                predicted_delta = -0.04  # Smaller penalty for missing hard questions
+    else:
+        # Correct answer fallback
+        if predicted_delta <= 0.0:
+            predicted_delta = 0.05
+
+    # Apply DELTA to current mastery and clamp bounds between 0.0 and 1.0
+    new_mastery = float(np.clip(current_mastery + predicted_delta, 0.0, 1.0))
+    
+    delta = new_mastery - current_mastery
     direction = "Increased" if delta >= 0 else "Decreased"
     
     print("\n" + "-"*45)
     print(f"Result:            {'CORRECT (+)' if is_correct == 1.0 else 'INCORRECT (-)'}")
     print(f"Response Time:     {elapsed_time} seconds")
     print(f"Previous Mastery:  {current_mastery:.4f}")
-    print(f"Predicted Mastery: {predicted_mastery:.4f}")
+    print(f"Predicted Mastery: {new_mastery:.4f}")
     print(f"Mastery Shift:     {direction} by {abs(delta):.4f} points")
     print("-" * 45)
     
-    # State update for adaptive loop
-    current_mastery = predicted_mastery
+    # Update state for next question
+    current_mastery = new_mastery
     step += 1
 
 print("\nAdaptive learning session finished.")
