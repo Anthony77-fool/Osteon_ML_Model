@@ -84,3 +84,15 @@ $$
 
 # 🔗 Model Notebook
 **Google Colab Notebook**: [Osteon_ML Model Pipeline on Google Colab](https://colab.research.google.com/drive/1xm5Nd1hMChq3pR7wfIy3xELyLa2L1buV?usp=sharing)
+
+# 🖥️ Model Execution
+
+A sample execution of the Osteon ML inference pipeline is shown below, demonstrating the model loading process, input features, predicted mastery delta ($\Delta$), and updated mastery score.
+
+---
+
+<div align="center">
+    <img src="https://github.com/Anthony77-fool/Osteon_ML_Model/blob/main/img/osteon_sample_img.png" alt="image_alt" height="600" width="800">
+</div>
+
+---
