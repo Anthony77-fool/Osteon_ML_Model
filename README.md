@@ -2,9 +2,12 @@
 
 An intelligent, dynamic adaptive learning engine designed to predict relative student mastery changes ($\Delta$) in a VR Anatomy application environment. By transitioning from absolute mastery predictions to a change-based relative model ($\Delta$), this system eliminates performance prediction plateaus and dynamically adjusts scores based on difficulty and response speed.
 
+<br/>
 
 # 🛠️ Tech Stack & Dependencies
 To execute the Python pipeline, build the ONNX model, and run inferences, configure your environment with the following dependencies.
+
+<br/>
 
 Prerequisites & Console Installation
 Ensure you have Python 3.9+ installed, then install the required packages via pip:
@@ -22,6 +25,7 @@ pip install pandas numpy scikit-learn skl2onnx onnxruntime
 | **Pandas & NumPy** | Dataset manipulation, feature engineering, and mathematical matrix operations |
 | **Google Colab** | Cloud-based notebook environment used for training and exporting models |
 
+<br/>
 
 # 💡 System Logic & Adaptive Loop Explanation
 
@@ -41,7 +45,11 @@ Instead of training a Machine Learning model to guess an absolute, total mastery
 
 5. **State Propagation**: $M_t$ is saved and passed forward as $M_{t-1}$ for the next attempt step ($t+1$).
 
+<br/>
+
 # 📐 Mathematical Model & Formulas
+
+<br/>
 
 The adaptive loop governs state updates using a sequential recursive function bounded between $0.0$ and $1.0$.
 
@@ -82,8 +90,12 @@ $$
 
 </div>
 
+<br/>
+
 # 🔗 Model Notebook
 **Google Colab Notebook**: [Osteon_ML Model Pipeline on Google Colab](https://colab.research.google.com/drive/1xm5Nd1hMChq3pR7wfIy3xELyLa2L1buV?usp=sharing)
+
+<br/>
 
 # 🖥️ Model Execution
 
