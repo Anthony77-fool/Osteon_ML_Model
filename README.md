@@ -18,7 +18,7 @@ pip install pandas numpy scikit-learn skl2onnx onnxruntime
 | **Python 3.9+** | Execution environment |
 | **Scikit-Learn** | Pipeline building, preprocessor transformations, and Random Forest regressor training |
 | **skl2onnx** | Converting trained Scikit-Learn pipelines into optimized `.onnx` model files |
-| **onnxruntime** | Lightweight, high-performance C++/Python inference engine used in execution loops |
+| **onnxruntime** | Lightweight, high-performance C#/Python inference engine used in execution loops |
 | **Pandas & NumPy** | Dataset manipulation, feature engineering, and mathematical matrix operations |
 | **Google Colab** | Cloud-based notebook environment used for training and exporting models |
 
